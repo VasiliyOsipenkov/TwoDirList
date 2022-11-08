@@ -10,6 +10,22 @@ public class Main {
         lst.addToHead("AAA");
         lst.printAll();
 
+        Object[] start = {
+                "DDD",
+                "CCC",
+                "BBB"
+        };
+        lst.addToHead(start); // добавление массива в начало списка
+        lst.printAll();
+
+        Object[] end = {
+                "444",
+                "555",
+                "666"
+        };
+        lst.addToTail(end);// добавление массива в конец списка
+        lst.printAll();
+
         TwoDirList rev = lst.reverse();
         rev.printAll();
 
