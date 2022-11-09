@@ -15,21 +15,42 @@ public class Main {
                 "CCC",
                 "BBB"
         };
+        /*
         lst.addToHead(start); // добавление массива в начало списка
         lst.printAll();
+         */
 
         Object[] end = {
                 "444",
                 "555",
                 "666"
         };
+
+        lst.printAllReverse();
+
+        /*
+        TwoDirList lst1 = new TwoDirList(); //поглощение списка с добавлением в начало
+        lst1.addToHead(start);
+        lst.addToHead(lst1);
+        lst.printAll();
+        lst1.printAll();
+
+        TwoDirList lst2 = new TwoDirList(); //поглощение списка с добавлением в конец
+        lst2.addToHead(end);
+        lst.addToTail(lst2);
+        lst.printAll();
+        lst2.printAll();
+        */
+        /*
         lst.addToTail(end);// добавление массива в конец списка
         lst.printAll();
-
+         */
+        /*
         TwoDirList rev = lst.reverse();
         rev.printAll();
-
-        /*lst.removeFromHead();
+        */
+        /*
+        lst.removeFromHead();
         lst.removeFromTail();
         lst.printAll();
 

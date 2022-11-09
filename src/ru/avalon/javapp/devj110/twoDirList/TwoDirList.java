@@ -13,10 +13,11 @@ public class TwoDirList {
         this.tail = tail;
     }
 
-    public void addToHead(Object value) { // 1\12 устанавливает нуль перед головой, выставляет нули по обе стороны списка из одного элемента
+    public void addToHead(Object value) {
         if(head != null) {
             ListItem nh = new ListItem(value);
             nh.previous = null;
+            head.previous = nh;
             nh.next = head;
             head = nh;
         } else {
@@ -33,57 +34,39 @@ public class TwoDirList {
         }
     }
 
-    public void addToHead(TwoDirList twoDirList) {//поглощение списка другим списком с добавлением значений второго в начало/конец (два
-        if(twoDirList.head == null)//метода) первого списка; после поглощения второй список должен очищаться;
+    public void addToHead(TwoDirList twoDirList) {
+        if(twoDirList.head == null)
             return;
-
-        if(head.keeps(val)) { //как идея очистки входящего
-            removeFromHead();
-            return true;
-        }// цель перебрать входящий список с конца, попутно добавляя его элементы в голову основного
-
-        ListItem prev = head,
-                it = head.next;
-        while(it != null) {// пока не переберет до конца
-            if(it.keeps(val)) { //ищет элемент, не выполняет блок пока не найдет
-                if(it != tail) {//когда нашел если не хвост
-                    prev.next = it.next; //обработка удаления, перенос связи со следующим в предыдущий, соответственно потеря связи
-                    it.next.previous = prev; // добавим удаление предыдущего значения it на всякий пожарный
-                } else {
-                    removeFromTail();
-                }
-                return true; //точка выхода из метода
-            }
-
-            prev = it; //часть цикла, если не найден элемент
-            it = it.next; //^
+        ListItem it = twoDirList.tail;
+        while(it != null) {
+            addToHead(it.value);
+            twoDirList.remove(it.value);
+            it = it.previous;
         }
-
-        return false;
     }
 
 
 
 
-    public Object peekFromHead() { // 2\12 теоритически подходит
+    public Object peekFromHead() {
         return head != null ? head.value : null;
     }
 
-    public Object removeFromHead() { // 3\12 должно работать, но проверить!!!!!
+    public Object removeFromHead() {
         if(head == null)
             return null;
 
         Object res = head.value;
         if(head != tail) {
             head = head.next;
-            head.next.previous = null;
+            head.previous = null;
         } else {
             head = tail = null;
         }
         return res;
     }
 
-    public void addToTail(Object value) { // 4\12 проверить
+    public void addToTail(Object value) {
         if(tail != null) {
             tail.next = new ListItem(value);
             tail.next.previous = tail;
@@ -96,19 +79,30 @@ public class TwoDirList {
         }
     }
 
-    public void addToTail(Object[] values){//добавление всех значений заданного массива в конец списка с сохранением порядка —
-        for (int i =0; i < values.length; ++i) {//последнее значение массива должно стать последним значением списка
+    public void addToTail(Object[] values){
+        for (int i =0; i < values.length; ++i) {
             addToTail(values[i]);
         }
 
     }
 
+    public void addToTail(TwoDirList twoDirList) {
+        if(twoDirList.head == null)
+            return;
+        ListItem it = twoDirList.head;
+        while(it != null) {
+            addToTail(it.value);
+            twoDirList.remove(it.value);
+            it = it.next;
+        }
+    }
 
-    public Object peekFromTail() { // 5\12 должно подходить
+
+    public Object peekFromTail() {
         return tail != null ? tail.value : null;
     }
 
-    public Object removeFromTail() { // 6\12 должно работать
+    public Object removeFromTail() {
         if(tail == null)
             return null;
 
@@ -125,11 +119,11 @@ public class TwoDirList {
         return res;
     }
 
-    public boolean isEmpty() { // 7\12 должно работать
+    public boolean isEmpty() {
         return head == null;
     }
 
-    public boolean contains(Object val) {// 8\12 перебирает значения от головы, должно работать
+    public boolean contains(Object val) {
         ListItem it = head;
         while(it != null) {
             if(it.keeps(val))
@@ -140,7 +134,7 @@ public class TwoDirList {
         return false;
     }
 
-    public void printAll() {// 9\12 перебирает от головы, должно работать
+    public void printAll() {
         ListItem it = head;
         while(it != null) {
             System.out.println(it.value);
@@ -149,7 +143,16 @@ public class TwoDirList {
         System.out.println();
     }
 
-    public boolean remove(Object val) {// 10\12 проверяет голову, удаляет если искомый объект, перебирает в сторону головы, не учитывает предыдущее значение
+    public void printAllReverse() {
+        ListItem it = tail;
+        while(it != null) {
+            System.out.println(it.value);
+            it = it.previous;
+        }
+        System.out.println();
+    }
+
+    public boolean remove(Object val) {
         if(head == null)
             return false;
 
@@ -160,25 +163,25 @@ public class TwoDirList {
 
         ListItem prev = head,
                 it = head.next;
-        while(it != null) {// пока не переберет до конца
-            if(it.keeps(val)) { //ищет элемент, не выполняет блок пока не найдет
-                if(it != tail) {//когда нашел если не хвост
-                    prev.next = it.next; //обработка удаления, перенос связи со следующим в предыдущий, соответственно потеря связи
-                    it.next.previous = prev; // добавим удаление предыдущего значения it на всякий пожарный
+        while(it != null) {
+            if(it.keeps(val)) {
+                if(it != tail) {
+                    prev.next = it.next;
+                    it.next.previous = prev;
                 } else {
                     removeFromTail();
                 }
-                return true; //точка выхода из метода
+                return true;
             }
 
-            prev = it; //часть цикла, если не найден элемент
-            it = it.next; //^
+            prev = it;
+            it = it.next;
         }
 
         return false;
-    }// 11\12 условно выполняется
+    }
 
-    public TwoDirList reverse() { // 12\12 работает - не трожь!!!!
+    public TwoDirList reverse() {
         if(head == null)
             return new TwoDirList();
 
@@ -198,13 +201,9 @@ public class TwoDirList {
     /*
 ? *добавление всех значений заданной коллекции в начало/конец списка (два метода) с сохранением порядка; коллекция — любой объект, реализующий интерфейс
 java.lang.Iterable;
-?
-? печать всех значений списка в прямом/обратном порядке (два метода);
-? *выполнение действия, заданного в параметре метода, для каждого значения списка в
-прямом/обратном порядке (два метода).
 */
 
-    private static class ListItem { //добавлен предыдущий элемент
+    private static class ListItem {
         Object value;
         ListItem previous;
         ListItem next;
@@ -213,7 +212,7 @@ java.lang.Iterable;
             this.value = value;
         }
 
-        boolean keeps(Object val) { // истинно если значение ноль и искомое ноль, или значение не ноль и эквивалентно искомому
+        boolean keeps(Object val) {
             return value == null && val == null
                     || value != null && value.equals(val);
         }
