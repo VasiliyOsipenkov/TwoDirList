@@ -1,5 +1,7 @@
 package ru.avalon.javapp.devj110.twoDirList;
 
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -26,7 +28,22 @@ public class Main {
                 "666"
         };
 
-        lst.printAllReverse();
+
+        ArrayList<String> startArr = new ArrayList<String>(); //добавление коллекции в начало списка
+        startArr.add("DDD");
+        startArr.add("CCC");
+        startArr.add("BBB");
+        lst.addToHead(startArr);
+        //lst.printAll();
+
+        ArrayList<String> endArr = new ArrayList<String>(); //добавление коллекции в конец списка
+        endArr.add("444");
+        endArr.add("555");
+        endArr.add("666");
+        lst.addToTail(endArr);
+        lst.printAll();
+
+        /*lst.printAllReverse(); //печать в обратном порядке*/
 
         /*
         TwoDirList lst1 = new TwoDirList(); //поглощение списка с добавлением в начало

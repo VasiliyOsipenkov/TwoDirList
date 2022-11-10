@@ -1,5 +1,7 @@
 package ru.avalon.javapp.devj110.twoDirList;
 
+import java.util.ArrayList;
+
 public class TwoDirList {
 
     private ListItem head;
@@ -45,8 +47,11 @@ public class TwoDirList {
         }
     }
 
-
-
+    public void addToHead(ArrayList<String> values) {
+        for (int i = values.size() - 1; i >=0; --i) {
+            addToHead(values.get(i));
+        }
+    }
 
     public Object peekFromHead() {
         return head != null ? head.value : null;
@@ -96,7 +101,11 @@ public class TwoDirList {
             it = it.next;
         }
     }
-
+    public void addToTail(ArrayList<String> values) {
+        for (String val : values) {
+            addToTail(val);
+        }
+    }
 
     public Object peekFromTail() {
         return tail != null ? tail.value : null;
@@ -197,11 +206,6 @@ public class TwoDirList {
 
         return new TwoDirList(newHead, newTail);
     }
-
-    /*
-? *добавление всех значений заданной коллекции в начало/конец списка (два метода) с сохранением пор€дка; коллекци€ Ч любой объект, реализующий интерфейс
-java.lang.Iterable;
-*/
 
     private static class ListItem {
         Object value;
