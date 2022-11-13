@@ -11,6 +11,9 @@ public class Main {
         lst.addToTail("333");
         lst.addToHead("AAA");
         lst.printAll();
+        lst.reverse();
+        lst.printAll();
+        System.out.println();
 
         Object[] start = {
                 "DDD",
@@ -28,7 +31,7 @@ public class Main {
                 "666"
         };
 
-
+        /*
         ArrayList<String> startArr = new ArrayList<String>(); //добавление коллекции в начало списка
         startArr.add("DDD");
         startArr.add("CCC");
@@ -43,7 +46,7 @@ public class Main {
         lst.addToTail(endArr);
         lst.printAll();
 
-        /*lst.printAllReverse(); //печать в обратном порядке*/
+        lst.printAllReverse(); //печать в обратном порядке*/
 
         /*
         TwoDirList lst1 = new TwoDirList(); //поглощение списка с добавлением в начало

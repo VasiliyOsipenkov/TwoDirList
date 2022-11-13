@@ -190,21 +190,22 @@ public class TwoDirList {
         return false;
     }
 
-    public TwoDirList reverse() {
-        if(head == null)
-            return new TwoDirList();
+    public ListItem replace(ListItem item) {
+        ListItem val = item.next;
+        item.next = item.previous;
+        item.previous = val;
+        return item;
+    }
 
-        ListItem newTail = new ListItem(head.value),
-                newHead = newTail,
-                it = head;
-        while(it.next != null) {
+    public TwoDirList reverse() {
+        TwoDirList list = new TwoDirList(replace(tail), replace(head));
+        ListItem it = list.head;
+        while (it.next != list.tail) {
+            it = replace(it);
             it = it.next;
-            ListItem nh = new ListItem(it.value);
-            nh.next = newHead;
-            newHead = nh;
         }
 
-        return new TwoDirList(newHead, newTail);
+        return list;
     }
 
     private static class ListItem {
