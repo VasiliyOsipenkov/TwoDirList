@@ -24,8 +24,6 @@ public class TwoDirList {
             head = nh;
         } else {
             head = new ListItem(value);
-            head.previous = null;
-            head.next = null;
             tail = head;
         }
     }
@@ -78,8 +76,6 @@ public class TwoDirList {
             tail = tail.next;
         } else {
             head = new ListItem(value);
-            head.previous = null;
-            head.next = null;
             tail = head;
         }
     }
@@ -114,18 +110,9 @@ public class TwoDirList {
     public Object removeFromTail() {
         if(tail == null)
             return null;
-
-        Object res = tail.value;
-        if(head != tail) {
-            ListItem nt = head;
-            while(nt.next != tail)
-                nt = nt.next;
-            nt.next = null;
-            tail = nt;
-        } else {
-            head = tail = null;
-        }
-        return res;
+        tail = tail.previous;
+        tail.next = null;
+        return tail.value;
     }
 
     public boolean isEmpty() {
@@ -170,20 +157,18 @@ public class TwoDirList {
             return true;
         }
 
-        ListItem prev = head,
-                it = head.next;
-        while(it != null) {
+
+        ListItem it = head;
+        while(it.next != null) {
             if(it.keeps(val)) {
                 if(it != tail) {
-                    prev.next = it.next;
-                    it.next.previous = prev;
+                    it.previous.next = it.next;
+                    it.next.previous = it.previous;
                 } else {
                     removeFromTail();
                 }
                 return true;
             }
-
-            prev = it;
             it = it.next;
         }
 
@@ -198,13 +183,14 @@ public class TwoDirList {
     }
 
     public TwoDirList reverse() {
-        TwoDirList list = new TwoDirList(replace(tail), replace(head));
-        ListItem it = list.head;
-        while (it.next != list.tail) {
-            it = replace(it);
-            it = it.next;
+        TwoDirList list = new TwoDirList();
+        ListItem it = tail;
+        while(it != null) {
+            list.addToTail(it.value);
+            it = it.previous;
         }
-
+        head = list.head;
+        tail = list.tail;
         return list;
     }
 

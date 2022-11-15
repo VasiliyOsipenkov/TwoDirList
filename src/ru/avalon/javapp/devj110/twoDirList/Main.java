@@ -13,14 +13,22 @@ public class Main {
         lst.printAll();
         lst.reverse();
         lst.printAll();
+
         System.out.println();
+
+        lst.remove("111");
+        lst.printAll();
+
+        /*
+        lst.removeFromTail();
+        lst.printAll();
 
         Object[] start = {
                 "DDD",
                 "CCC",
                 "BBB"
         };
-        /*
+
         lst.addToHead(start); // добавление массива в начало списка
         lst.printAll();
          */
