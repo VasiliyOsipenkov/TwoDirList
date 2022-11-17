@@ -37,12 +37,17 @@ public class TwoDirList {
     public void addToHead(TwoDirList twoDirList) {
         if(twoDirList.head == null)
             return;
+        twoDirList.tail.next = head;
+        head.previous = twoDirList.tail;
+        head = twoDirList.head;
+        /*
         ListItem it = twoDirList.tail;
         while(it != null) {
             addToHead(it.value);
-            twoDirList.remove(it.value);
             it = it.previous;
         }
+        */
+        twoDirList.head = twoDirList.tail = null;
     }
 
     public void addToHead(ArrayList<String> values) {
@@ -88,14 +93,20 @@ public class TwoDirList {
     }
 
     public void addToTail(TwoDirList twoDirList) {
+
         if(twoDirList.head == null)
             return;
+        tail.next = twoDirList.head;
+        twoDirList.head.previous = tail;
+        tail = twoDirList.tail;
+        /*
         ListItem it = twoDirList.head;
         while(it != null) {
             addToTail(it.value);
-            twoDirList.remove(it.value);
             it = it.next;
         }
+         */
+        twoDirList.head = twoDirList.tail = null;
     }
     public void addToTail(ArrayList<String> values) {
         for (String val : values) {
@@ -108,11 +119,19 @@ public class TwoDirList {
     }
 
     public Object removeFromTail() {
+
         if(tail == null)
             return null;
-        tail = tail.previous;
-        tail.next = null;
-        return tail.value;
+
+        Object res = tail.value;
+        if(head != tail) {
+            tail = tail.previous;
+            tail.next = null;
+        } else {
+            head = tail = null;
+        }
+
+        return res;
     }
 
     public boolean isEmpty() {
@@ -183,6 +202,8 @@ public class TwoDirList {
     }
 
     public TwoDirList reverse() {
+
+
         TwoDirList list = new TwoDirList();
         ListItem it = tail;
         while(it != null) {
@@ -192,6 +213,7 @@ public class TwoDirList {
         head = list.head;
         tail = list.tail;
         return list;
+
     }
 
     private static class ListItem {

@@ -10,7 +10,9 @@ public class Main {
         lst.addToTail("222");
         lst.addToTail("333");
         lst.addToHead("AAA");
+        /*
         lst.printAll();
+
         lst.reverse();
         lst.printAll();
 
@@ -19,9 +21,11 @@ public class Main {
         lst.remove("111");
         lst.printAll();
 
-        /*
+
         lst.removeFromTail();
         lst.printAll();
+
+         */
 
         Object[] start = {
                 "DDD",
@@ -29,9 +33,10 @@ public class Main {
                 "BBB"
         };
 
+        /*
         lst.addToHead(start); // добавление массива в начало списка
         lst.printAll();
-         */
+        */
 
         Object[] end = {
                 "444",
@@ -56,19 +61,27 @@ public class Main {
 
         lst.printAllReverse(); //печать в обратном порядке*/
 
-        /*
+
         TwoDirList lst1 = new TwoDirList(); //поглощение списка с добавлением в начало
         lst1.addToHead(start);
         lst.addToHead(lst1);
-        lst.printAll();
-        lst1.printAll();
 
         TwoDirList lst2 = new TwoDirList(); //поглощение списка с добавлением в конец
         lst2.addToHead(end);
         lst.addToTail(lst2);
-        lst.printAll();
-        lst2.printAll();
-        */
+
+        //lst.printAll();
+
+        lst.printAllReverse(); // проверка связей
+
+        TwoDirList lst3 = new TwoDirList();
+        lst3.addToHead("test");
+        lst3.removeFromTail(); //проверка на элементе из одного символа
+
+        lst.removeFromTail();
+
+        lst.printAllReverse();
+
         /*
         lst.addToTail(end);// добавление массива в конец списка
         lst.printAll();
